@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dynamic Load</title>
+
+    <script type="text/javascript"
+        src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
+    <script type="text/javascript">
+        var vizList = {"flights":"http://public.tableau.com/views/RegionalSampleWorkbook/Flights",
+            "obesity":"http://public.tableau.com/views/RegionalSampleWorkbook/Obesity",
+            "college":"http://public.tableau.com/views/RegionalSampleWorkbook/College",
+            "stock": "http://public.tableau.com/views/RegionalSampleWorkbook/Stocks",            
+            "storms": "http://public.tableau.com/views/RegionalSampleWorkbook/Storms",
+            "parks": "https://public.tableau.com/views/USNationalParksVisitationTrends/Dashboard"};
+
+        var viz,
+            vizLen = vizList.length,
+            vizCount = 0;
+
+        function promt_createViz(keyword) {
+          var string = keyword;
+          var keyword = string.match(/obesity|college|stock|storms|flights|parks/)
+          createViz(keyword)
+        }
+        function createViz(keyword) {
+            var vizDiv = document.getElementById("vizContainer"),
+                options = {
+                    hideTabs: true
+                    .valueOf
+
+                };
+
+            if (viz) { // If a viz object exists, delete it.
+                viz.dispose();
+            }
+
+            var vizURL = vizList[keyword];
+            viz = new tableau.Viz(vizDiv, vizURL, options);
+        }
+    </script>
+</head>
+<body>
+<table>
+  <tr>
+    <td>
+      <body onload="createViz(0);">
+          <div id="vizContainer" style="width:800px; height:700px;"></div>
+      </body>
+    </td>
+    <td>
+      <div class="column">
+        <h1>Royce's Web Framework for Natural Language Powered visual engine</h1>
+        <div id="controls" style="padding:20px;">
+            <input type="text" oninput="javascript:promt_createViz(this.value)">
+        </div>
+    </td>
+  </tr>
+</table>
+
+
+</body>
+
+</html>
